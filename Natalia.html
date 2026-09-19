@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f9a8d4" />
+  <title>Flores amarillas para Natalia</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { min-height: 100vh; overflow-x: hidden; color: #4c0519; background: linear-gradient(180deg,#ffe4e6 0%,#fffbeb 50%,#fef3c7 100%); }
+    .glow { position: fixed; border-radius: 50%; filter: blur(55px); opacity: .45; pointer-events: none; }
+    .g1 { width: 280px; height: 280px; left: -100px; top: -80px; background: #f9a8d4; }
+    .g2 { width: 320px; height: 320px; right: -120px; top: 30%; background: #fde047; }
+    .g3 { width: 260px; height: 260px; left: 25%; bottom: -100px; background: #fda4af; }
+    main { position: relative; z-index: 2; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 30px 18px; }
+    .card { width: min(570px,100%); text-align: center; padding: 34px 26px; border-radius: 32px; background: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 24px 60px rgba(190,24,93,.18); backdrop-filter: blur(12px); animation: rise .8s ease both; }
+    .gift { width: 96px; height: 96px; margin: 0 auto 20px; border-radius: 50%; display: grid; place-items: center; font-size: 47px; background: linear-gradient(135deg,#fde047,#f59e0b); box-shadow: 0 12px 26px rgba(245,158,11,.3); animation: sway 2.2s ease-in-out infinite; }
+    .eyebrow { color: #e11d48; font-size: 13px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; }
+    h1 { font-size: clamp(38px,8vw,58px); line-height: 1.05; margin: 10px 0 15px; color: #881337; }
+    p { font-size: 18px; line-height: 1.65; }
+    button { border: 0; border-radius: 999px; padding: 14px 24px; margin-top: 10px; background: #e11d48; color: white; font-size: 17px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 22px rgba(225,29,72,.3); transition: .2s; }
+    button:hover { transform: scale(1.04); background: #be123c; }
+    #surprise { display: none; width: min(1050px,100%); grid-template-columns: 1.05fr .95fr; gap: 30px; align-items: center; }
+    #surprise.show { display: grid; animation: rise .8s ease both; }
+    .message { padding: 34px; border-radius: 32px; background: rgba(255,255,255,.74); border: 1px solid white; box-shadow: 0 24px 60px rgba(190,24,93,.16); backdrop-filter: blur(12px); }
+    .message h1 { font-size: clamp(40px,6vw,64px); }
+    .message .strong { font-weight: 900; color: #be123c; }
+    .signature { display: flex; gap: 12px; align-items: center; border-top: 1px solid #fecdd3; padding-top: 18px; margin-top: 24px; font-weight: 700; }
+    .heart { width: 44px; height: 44px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; background: #ffe4e6; color: #e11d48; }
+    .bouquet { min-height: 470px; position: relative; display: flex; justify-content: center; align-items: flex-end; }
+    .flower { position: absolute; left: 50%; bottom: 118px; width: 92px; height: 320px; transform-origin: bottom center; animation: bloom .8s cubic-bezier(.2,.8,.2,1) both; }
+    .stem { position: absolute; width: 8px; height: 245px; bottom: 0; left: 42px; border-radius: 9px; background: linear-gradient(#22c55e,#15803d); }
+    .leaf { position: absolute; width: 52px; height: 25px; left: 44px; bottom: 100px; border-radius: 100% 0 100% 0; background: #22c55e; transform: rotate(-15deg); }
+    .head { position: absolute; width: 92px; height: 92px; left: 0; top: 0; filter: drop-shadow(0 8px 7px rgba(120,53,15,.2)); }
+    .petal { position: absolute; width: 29px; height: 47px; left: 31px; top: 0; border-radius: 70% 70% 55% 55%; transform-origin: 14px 46px; background: linear-gradient(#fde047,#f59e0b); }
+    .center { position: absolute; width: 36px; height: 36px; left: 28px; top: 28px; z-index: 3; border-radius: 50%; background: linear-gradient(135deg,#d97706,#78350f); }
+    .wrap { position: absolute; z-index: 8; bottom: 30px; left: 50%; width: 250px; height: 145px; transform: translateX(-50%); border-radius: 18% 18% 46% 46%; background: linear-gradient(135deg,#f43f5e,#be123c); box-shadow: 0 19px 36px rgba(190,24,93,.3); }
+    .ribbon { position: absolute; width: 285px; height: 70px; left: 50%; top: 20px; transform: translateX(-50%) rotate(-2deg); border: 18px solid #fda4af; border-radius: 50%; }
+    .label { position: absolute; z-index: 2; left: 50%; top: 70px; transform: translateX(-50%); white-space: nowrap; padding: 9px 17px; border-radius: 999px; background: #fef3c7; color: #be123c; font-size: 14px; font-weight: 900; }
+    .fall { position: fixed; z-index: 1; top: -30px; border-radius: 80% 20% 70% 30%; background: #facc15; opacity: .85; pointer-events: none; animation: fall linear infinite; }
+    .footer { position: fixed; z-index: 4; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 12px; color: rgba(159,18,57,.65); font-weight: 700; }
+    @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes sway { 0%,100% { transform: rotate(-4deg) scale(1); } 50% { transform: rotate(4deg) scale(1.05); } }
+    @keyframes bloom { from { opacity: 0; scale: .2; translate: 0 80px; } to { opacity: 1; scale: 1; translate: 0 0; } }
+    @keyframes fall { 0% { transform: translateY(-10vh) rotate(0); opacity:0; } 10% { opacity:.85; } 100% { transform: translateY(115vh) rotate(420deg); opacity:0; } }
+    @media(max-width:780px) {
+      #surprise.show { grid-template-columns: 1fr; }
+      .bouquet { order: -1; min-height: 420px; transform: scale(.88); margin: -25px 0; }
+      .message { padding: 26px 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+  <main>
+    <section id="cover" class="card">
+      <div class="gift">🎁</div>
+      <div class="eyebrow">Un detalle especial</div>
+      <h1>Para Natalia 💛</h1>
+      <p>Hay una pequeña sorpresa esperando por ti. Ábrela con una sonrisa.</p>
+      <button onclick="openGift()">♥ &nbsp; Abrir mi regalo</button>
+    </section>
+
+    <section id="surprise">
+      <article class="message">
+        <div class="eyebrow">✨ Amor y amistad</div>
+        <h1>¡Feliz día, Natalia! 💛</h1>
+        <p>Hoy quise regalarte estas flores amarillas para recordarte lo especial que eres y dejarte un detalle que, así como mi cariño por ti, pueda perdurar para siempre. 💛</p>
+        <p>Gracias por tu cariño, por los buenos momentos y por ser esa persona con la que siempre se puede contar.</p>
+        <p class="strong">Eres la mejor prima del mundo mundial. Nunca lo olvides. 🌻</p>
+        <div class="signature"><span class="heart">♥</span><span>Con mucho cariño, especialmente para ti.</span></div>
+      </article>
+      <div class="bouquet" id="bouquet">
+        <div class="wrap"><div class="ribbon"></div><div class="label">PARA NATALIA</div></div>
+      </div>
+    </section>
+  </main>
+  <div class="footer">🌻 Hecho con cariño</div>
+  <script>
+    function flowerHTML(i) {
+      let petals = '';
+      for (let j=0;j<10;j++) petals += `<span class="petal" style="transform:rotate(${j*36}deg)"></span>`;
+      const x=(i-4)*34, y=Math.abs(i-4)*13, r=(i-4)*3;
+      return `<div class="flower" style="transform:translateX(${x-46}px) translateY(${y}px) rotate(${r}deg);animation-delay:${i*.09}s"><div class="stem"></div><div class="leaf"></div><div class="head">${petals}<span class="center"></span></div></div>`;
+    }
+    const bouquet=document.getElementById('bouquet');
+    bouquet.insertAdjacentHTML('afterbegin',Array.from({length:9},(_,i)=>flowerHTML(i)).join(''));
+    function openGift(){
+      document.getElementById('cover').style.display='none';
+      document.getElementById('surprise').classList.add('show');
+      for(let i=0;i<28;i++){
+        const p=document.createElement('span'); p.className='fall';
+        const size=10+(i%4)*3; p.style.left=((i*37)%100)+'%';
+        p.style.width=size+'px'; p.style.height=(size*1.6)+'px';
+        p.style.animationDuration=(5+(i%5))+'s'; p.style.animationDelay=((i%8)*.4)+'s';
+        document.body.appendChild(p);
+      }
+    }
+  </script>
+</body>
+</html>
